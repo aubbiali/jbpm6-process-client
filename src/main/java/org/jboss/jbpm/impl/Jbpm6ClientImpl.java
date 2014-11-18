@@ -1,15 +1,17 @@
 package org.jboss.jbpm.impl;
 
-import static com.jayway.restassured.RestAssured.given;
-import static org.jboss.jbpm.impl.Jbpm6ClientImpl.Http.GET;
-import static org.jboss.jbpm.impl.Jbpm6ClientImpl.Http.POST;
-import java.util.Map;
-import org.apache.http.HttpException;
-import org.jboss.jbpm.api.Jbpm6Client;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
+import org.apache.http.HttpException;
+import org.jboss.jbpm.api.Jbpm6Client;
+
+import java.util.Map;
+
+import static com.jayway.restassured.RestAssured.given;
+import static org.jboss.jbpm.impl.Jbpm6ClientImpl.Http.GET;
+import static org.jboss.jbpm.impl.Jbpm6ClientImpl.Http.POST;
 
 /**
  * Simple rest client to interact with JBPM6s REST API for process management
@@ -50,8 +52,11 @@ public class Jbpm6ClientImpl implements Jbpm6Client{
 	public String startTask(String id) throws HttpException{
 		return send(POST, "rest/task/"+id+"/start");
 	}
-	
-	
+
+    public String claimTask(String id) throws HttpException{
+        return send(POST, "rest/task/"+id+"/claim");
+    }
+
 	public String completeTask(String id, String commaSeparatedListOfParams) throws HttpException{
 		return completeTaskWithMap(id, queryStringToMap(commaSeparatedListOfParams));
 	}
