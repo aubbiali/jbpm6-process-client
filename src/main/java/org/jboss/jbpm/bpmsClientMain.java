@@ -27,7 +27,7 @@ public class bpmsClientMain {
             config.parseJSON(s);
 
             for (int i=0; i <MAX_INSTANCES; i++) {
-                bpmsClientThread2 t = new bpmsClientThread2("T"+i,config);
+                bpmsClientThread t = new bpmsClientThread("T"+i);
             }
 
 
