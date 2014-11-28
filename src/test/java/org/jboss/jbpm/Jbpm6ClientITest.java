@@ -20,7 +20,7 @@ public class Jbpm6ClientITest {
     clientObjects=new Jbpm6ClientObjects(server,username,password);
   }
   
-  @Test
+//  @Test
   public void test() throws Exception{
     Assert.assertTrue(client.getTasks(TasksBy.potentialOwner,"mat").contains("task-summary-list"));
     Assert.assertTrue(clientObjects.getTasks(TasksBy.potentialOwner,"mat").size()==0);
