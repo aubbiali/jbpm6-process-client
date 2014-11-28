@@ -3,6 +3,13 @@
   "username":  "erics",
   "password":  "bpmsuite1!", 
   "max_task_delay": 10000,
+  "n_instances": 2,
+
+   "price": 5000,
+
+   "travellers" : ["1i","1i","2i","2i","2i","3i","4i"],
+
+   "review": ["False","False","True"],
 
   "names":  ["Kiara Z. Hanson",
             "Jordan X. May",
@@ -46,12 +53,6 @@
 		}
 	    ],
 
-
-   "price": 5000,
-
-   "travellers" : ["1i","1i","2i","2i","2i","3i","4i"],
-
-   "review": ["False","False","True"],
    
 
    "tasks": [
@@ -61,7 +62,7 @@
 		},
 		{
 		  "name":"Price Review",
-		  "out": "totalPriceOut=${price}i,reviewerCommentOut=No Comments"
+		  "out": "totalPriceOut=${price},reviewerCommentOut=No Comments"
 		},
 		{
 		  "name":"Booking Complete",

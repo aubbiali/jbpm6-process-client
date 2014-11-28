@@ -11,10 +11,10 @@ public class bpmsClientMain {
 
        //  private static bpmsClientApp app;
 
-        final static int MAX_INSTANCES=1;
+ //       final static int MAX_INSTANCES=1;
 
 
-
+        static bpmsClientConfig config;
 
 
         public static void main(String[] args) {
@@ -22,12 +22,16 @@ public class bpmsClientMain {
             String s=null;
             if (args.length> 0) s=args[0];
 
-            bpmsClientConfig config = new bpmsClientConfig();
+            config = new bpmsClientConfig();
 
             config.parseJSON(s);
 
-            for (int i=0; i <MAX_INSTANCES; i++) {
-                bpmsClientThread2 t = new bpmsClientThread2("T"+i,config);
+
+            for (int i=0; i < config.MAX_INSTANCES.intValue(); i++) {
+             bpmsClientThread2 t = new bpmsClientThread2("t"+i, config);
+
+  //             bpmsClientThread t = new bpmsClientThread("t"+i);
+
             }
 
 

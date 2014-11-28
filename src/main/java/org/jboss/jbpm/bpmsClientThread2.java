@@ -20,11 +20,19 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
+import java.util.ArrayList;
 
 import static javax.xml.xpath.XPathConstants.STRING;
 
 
+
+
 public class bpmsClientThread2 implements Runnable {
+
+
+    public    String server = "http://localhost:8080/business-central/";
+    public    String username = "erics";
+    public    String password = "bpmsuite1!";
 
     Thread runner;
 
@@ -38,25 +46,40 @@ public class bpmsClientThread2 implements Runnable {
 
     private List<Task> tasks = null;
 
-    bpmsClientConfig config;
+    public bpmsClientConfig config;
+    public String name;
 
-    public bpmsClientThread2() {
+   public bpmsClientThread2() {
 
     }
 
 
-    public  void bpmsCLientThread2 (String threadName, bpmsClientConfig config) {
+    public  bpmsClientThread2 (String threadName, bpmsClientConfig config) {
 
         runner = new Thread(this, threadName); // (1) Create a new thread.
         System.out.println(runner.getName());
         this.config = config;
+        this.name = threadName;
+        // username = config.username;
+        // password = config.password;
+        // server = config.server;
         runner.start(); // (2) Start the thread.
 
     }
 
-    private String rndChoice(String [] a) {
-        int idx = new Random().nextInt(a.length);
-        return a[idx];
+//    private String rndChoice(String [] a) {
+//        int idx = new Random().nextInt(a.length-1);
+ //       return a[idx];
+//    }
+
+    private String rndChoice(ArrayList<String> a) {
+        int idx = new Random().nextInt(a.size());
+        return a.get(idx);
+    }
+
+    private String rndInt (Number min, Number max) {
+        Integer value = new Random().nextInt( max.intValue() - min.intValue());
+        return value.toString() + "i";
     }
 
     private Task taskReady (List<Task> tasks) {
@@ -78,11 +101,11 @@ public class bpmsClientThread2 implements Runnable {
     }
 
 
-
-
     private void init() {
-        client = new Jbpm6ClientImpl(config.server, config.username, config.password, true);
-        clientObjects = new Jbpm6ClientObjects(config.server, config.username, config.password);
+
+
+        client = new Jbpm6ClientImpl(server, username, password, true);
+        clientObjects = new Jbpm6ClientObjects(server, username, password);
     }
 
     private Task executeNextTask (int retries) {
@@ -121,12 +144,12 @@ public class bpmsClientThread2 implements Runnable {
                 response = client.claimTask(task.getId());
                 response = client.startTask(task.getId());
             try {
-                Thread.sleep(new Random().nextInt((int) config.MAX_TASK_DELAY));
+                Thread.sleep(new Random().nextInt(config.MAX_TASK_DELAY.intValue()));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             if (task.getName().contains("Price Review")) {
-                    Integer price = new Random().nextInt((int) config.MAX_PRICE);
+                    Integer price = new Random().nextInt( config.MAX_PRICE.intValue());
                     String priceString = price.toString() + "i";
                     response = client.completeTask(task.getId(),
                             "totalPriceOut=" + priceString
